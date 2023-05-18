@@ -5,5 +5,5 @@ body{
     flex-direction: column;
 }
 canvas{
-    background: black;
+    background: url(img/5_background/layers/air.png);
 }
