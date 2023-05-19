@@ -23,11 +23,14 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollision();
-            this.checkThrowObjects();
             this.checkBottleUnderGround();
             this.spawnEndBoss();
             this.checkCharPosToBoss()
         }, 300)
+
+        setInterval(() => {
+            this.checkThrowObjects();
+        },100)
     }
 
     checkCharPosToBoss() {
@@ -45,7 +48,7 @@ class World {
             let bottle = new ThrowableObject(this.character.x + (this.character.width / 2), this.character.y + (this.character.height / 2))
             this.throwableObjects.push(bottle)
             this.character.bottles--;
-            this.throwableObjects.forEach((obj)=>{
+            this.throwableObjects.forEach((obj) => {
                 obj.world = this;
             })
         }
@@ -123,11 +126,11 @@ class World {
             world.level.enemies[world.level.enemies.length - 1].isCollidingCharakter = true;
         }
 
-        if(this.endBossIsSpawn && this.throwableObjects.length > 0){
-            this.throwableObjects.forEach((obj) =>{
-            if(this.level.enemies[world.level.enemies.length - 1].isColliding(obj)){
-                this.level.enemies[world.level.enemies.length - 1].hit(obj.attack)
-            }
+        if (this.endBossIsSpawn && this.throwableObjects.length > 0) {
+            this.throwableObjects.forEach((obj) => {
+                if (this.level.enemies[world.level.enemies.length - 1].isColliding(obj)) {
+                    this.level.enemies[world.level.enemies.length - 1].hit(obj.attack)
+                }
             })
         }
     }
