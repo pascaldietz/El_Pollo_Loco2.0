@@ -3,6 +3,11 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background: black;
+    color: yellow;
+}
+h1{
+font-size: 3rem;
 }
 canvas{
     background: url(img/5_background/layers/air.png);

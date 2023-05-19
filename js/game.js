@@ -5,7 +5,6 @@ let keyboard = new Keyboard();
 function init(){
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-    console.log('My Character is ', world.character);
 }
 
 
@@ -23,7 +22,10 @@ window.addEventListener('keydown', (event) => {
         keyboard.DOWN = true;
     }
     if(event.keyCode == 32){
-        keyboard.DOWN = true;
+        keyboard.SPACE = true;
+    }
+    if(event.keyCode == 68){
+        keyboard.D = true;
     }
 });
 
@@ -41,6 +43,9 @@ window.addEventListener('keyup', (event) => {
         keyboard.DOWN = false;
     }
     if(event.keyCode == 32){
-        keyboard.DOWN = false;
+        keyboard.SPACE = false;
+    }
+    if(event.keyCode == 68){
+        keyboard.D = false;
     }
 });

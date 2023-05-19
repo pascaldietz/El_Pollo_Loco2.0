@@ -1,42 +1,87 @@
-class MovebleObject {
-    x = 120;
-    y = 250;
-    img;
-    height = 200;
-    width = 100;
+class MovebleObject extends DrawableObjects {
+
+
     speed = 30;
     runSpeed = 2;
-    imageCache = {};
     otherDirection = false;
+    speedY = 0;
+    acceleration = 2.5;
+    health = 100;
+    attack = 20;
+    lastHit = 0;
+
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+
+        }, 1000 / 25)
+    }
+
+    isAboveGround() {
+        if (this instanceof ThrowableObject) {
+            return true;
+        }
+        else {
+            return this.y < 160;
+        }
+
+
+    }
 
     moveRight() {
+        this.x += this.speed;
 
     };
 
-    moveLeft(runSpeed) {
-        setInterval(() => {
-            this.x -= runSpeed;
-        }, 1000 / this.speed);
-    }
-
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
+    moveLeft() {
+        this.x -= this.speed;
 
     }
 
-    playAnimation(images){
+
+
+    playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
+    }
+
+    jump() {
+        this.speedY = 25;
+    }
+
+    isColliding(mo) {
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height
+    }
+
+    itHurt(images) {
+        this.playAnimation(images)
+    }
+
+    isDead() {
+        return this.health <= 0;
+    }
+
+    hit(hit) {
+        this.health -= hit;
+        if (this.health < 0) {
+            this.health = 0;
+        }
+        else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt(time) {
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000;
+        return timepassed < time;
     }
 }
