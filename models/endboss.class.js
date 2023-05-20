@@ -96,6 +96,7 @@ class Endboss extends MovebleObject {
                     this.img = this.imageCache[path];
                     this.deadCount++;
                 }
+                this.attack = 0;
             }
         }, 1000/6)
 

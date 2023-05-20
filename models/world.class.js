@@ -30,7 +30,7 @@ class World {
 
         setInterval(() => {
             this.checkThrowObjects();
-        },100)
+        }, 150)
     }
 
     checkCharPosToBoss() {
@@ -117,8 +117,11 @@ class World {
     checkCollision() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit(enemy.attack);
-                this.statusBar.setPercentage(this.character.health);
+                if (enemy.health > 0) {
+                    this.character.hit(enemy.attack);
+                    this.statusBar.setPercentage(this.character.health);
+                }
+
             }
 
         });
