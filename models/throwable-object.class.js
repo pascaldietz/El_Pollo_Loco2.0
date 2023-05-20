@@ -1,7 +1,7 @@
 class ThrowableObject extends MovebleObject {
     world;
     lookRight = true;
-    attack = 20;
+    attack = 2;
 
     IMAGES_BOTTLE_SPIN = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',

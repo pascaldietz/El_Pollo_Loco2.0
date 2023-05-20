@@ -11,4 +11,4 @@ class Level {
         this.level_end_x = level_end_x;
 
     }
-}
+} 

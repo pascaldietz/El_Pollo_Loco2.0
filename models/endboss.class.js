@@ -3,7 +3,7 @@ class Endboss extends MovebleObject {
     height = 400;
     y = 80;
     health = 200;
-    attack = 5;
+    attack = 1;
     isCollidingCharakter = false;
     attackCounter = 0;
     charcterIsLeft = true;
@@ -77,13 +77,13 @@ class Endboss extends MovebleObject {
                     this.playAnimation(this.IMAGES_WALKING_CHICKEN);
                     this.moveLeft();
                     this.otherDirection = false;
-                    this.attack = 15;
+                    this.attack = 1;
                 }
                 else{
                     this.playAnimation(this.IMAGES_WALKING_CHICKEN);
                     this.moveRight();
                     this.otherDirection = true;
-                    this.attack = 15;
+                    this.attack = 1;
 
                 }
             }
@@ -106,7 +106,7 @@ class Endboss extends MovebleObject {
                 if (this.attackCounter < 30) {
                     this.playAnimation(this.IMAGES_ATTACK_CHICKEN);
                     this.attackCounter++;
-                    this.attack = 20;
+                    this.attack = 2;
                 }
                 else {
                     this.isCollidingCharakter = false;

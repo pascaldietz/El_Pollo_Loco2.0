@@ -20,6 +20,7 @@ function levelDesign() {
 
     for (let i = 0; i < levelLength; i++) {
         clouds.push(new Cloud(1440 * i));
-        chicken.push(new Chicken(1440 * (i+1))) 
+        chicken.push(new Chicken(1440 * (i+1)))
+        chicken.push(new BabyChicken(1440 * (i+1)))
     }
 }

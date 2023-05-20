@@ -30,7 +30,7 @@ class World {
             this.checkBottleUnderGround();
             this.spawnEndBoss();
             this.checkCharPosToBoss()
-        }, 300)
+        }, 30)
 
         setInterval(() => {
             this.checkThrowObjects();
@@ -124,13 +124,15 @@ class World {
     }
 
     checkCollision() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                if (enemy.health > 0) {
+        this.level.enemies.forEach((enemy, y) => {
+            if (!this.level.enemies[y].isDead() && this.character.isColliding(enemy)) {
+                if (this.character.speedY < 0 && this.character.isAboveGround()) {
+                    this.level.enemies[y].hit(5);
+                } else {
                     this.character.hit(enemy.attack);
-                    this.statusBar.setPercentage(this.character.health);
+                    this.statusBar.setPercentage(this.character.health)
+                    console.log(this.character.health)
                 }
-
             }
         });
         if (this.level.enemies[world.level.enemies.length - 1].isColliding(this.character) && this.endBossIsSpawn) {
