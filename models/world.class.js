@@ -6,9 +6,12 @@ class World {
     keyboard;
     camera_x;
     statusBar = new StatusBar();
+    statusBarBottle = new StatusBarBottle();
+    statusBarCoins = new StatusBarCoins();
     endScreen = new EndScreen();
     throwableObjects = []
     endBossIsSpawn = false;
+    collectibles = []
 
 
     constructor(canvas, keyboard) {
@@ -18,6 +21,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.spawnBottlesAndCoins();
     }
 
     run() {
@@ -48,6 +52,7 @@ class World {
             let bottle = new ThrowableObject(this.character.x + (this.character.width / 2), this.character.y + (this.character.height / 2))
             this.throwableObjects.push(bottle)
             this.character.bottles--;
+            this.statusBarBottle.setPercentage(this.character.bottles / 8 * 100);
             this.throwableObjects.forEach((obj) => {
                 obj.world = this;
             })
@@ -68,11 +73,15 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addMoreToMap(this.level.backgroundObjects);
         this.addMoreToMap(this.level.clouds);
+        this.addMoreToMap(this.collectibles);
         this.addToMap(this.character);
         this.addMoreToMap(this.level.enemies);
         this.addMoreToMap(this.throwableObjects);
+
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarBottle);
+        this.addToMap(this.statusBarCoins);
         if (this.character.isDead()) { this.addToMap(this.endScreen); }
         let self = this;
         requestAnimationFrame(function () {
@@ -123,7 +132,6 @@ class World {
                 }
 
             }
-
         });
         if (this.level.enemies[world.level.enemies.length - 1].isColliding(this.character) && this.endBossIsSpawn) {
             world.level.enemies[world.level.enemies.length - 1].isCollidingCharakter = true;
@@ -136,14 +144,39 @@ class World {
                 }
             })
         }
+
+        this.collectibles.forEach((clb, index) => {
+            if (this.character.isColliding(clb)) {
+                if (clb instanceof Bottle) {
+                    this.character.bottles++;
+                    this.collectibles.splice(index, 1);
+                    this.statusBarBottle.setPercentage(this.character.bottles / 8 * 100);
+                }
+                if (clb instanceof Coins) {
+                    this.character.coins++;
+                    this.collectibles.splice(index, 1);
+                    this.statusBarCoins.setPercentage(this.character.coins / 11 * 100);
+                }
+
+            }
+        })
     }
 
     spawnEndBoss() {
-        if (this.character.x > this.level.level_end_x - this.canvas.width && !this.endBossIsSpawn) {
+        if (this.character.x > this.level.level_end_x/2 && !this.endBossIsSpawn) {
             this.level.enemies.push(new Endboss(this.level.level_end_x + 400));
             this.endBossIsSpawn = true;
-            console.log('Der Endboss wurde Gespawnt!!!')
+        }
+    }
 
+    spawnBottlesAndCoins(){
+        for (let i = 0; i < 8; i++) {
+            this.collectibles.push(new Bottle(i,this.level.level_end_x))
+            
+        }
+        for (let i = 0; i < 11; i++) {
+            this.collectibles.push(new Coins(i,this.level.level_end_x))
+            
         }
     }
 }

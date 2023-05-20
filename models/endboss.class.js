@@ -67,7 +67,7 @@ class Endboss extends MovebleObject {
     animate() {
         setInterval(() => {
             if (!this.isCollidingCharakter && !this.isDead()) {
-                if (this.isHurt(1)) {
+                if (this.isHurt(2)) {
                     this.playAnimation(this.IMAGES_HURT_CHICKEN);
                     this.attack = 0;
                 }

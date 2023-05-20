@@ -4,9 +4,9 @@ class Character extends MovebleObject {
     height = 300
     y = 160
     speed = 5
-    bottles = 10;
+    bottles = 0;
     idleTimer = 0;
-
+    coins = 0;
     deadCount = 0;
 
 

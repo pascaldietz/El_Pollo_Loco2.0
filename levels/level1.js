@@ -1,38 +1,25 @@
-const level1 = new Level([
-    new Chicken(720),
-    new Chicken(1440),
-    new Chicken(2000),
-],
-[
-    new Cloud(0),
-    new Cloud(1440 * 1),
-    new Cloud(1440 * 2),
-    new Cloud(1440 * 3),
-    new Cloud(1440 * 4),
-    new Cloud(1440 * 5),
-    new Cloud(1440 * 6),
-    new Cloud(1440 * 7),
-    new Cloud(1440 * 8),
-    new Cloud(1440 * 9)
+let levelLength = 10;
+let bgp = [];
+let clouds = [];
+let chicken = [];
 
-],
-[
-    new BackgroundObject('img/5_background/layers/3_third_layer/full.png',-1440),
-    new BackgroundObject('img/5_background/layers/2_second_layer/full.png',-1440),
-    new BackgroundObject('img/5_background/layers/1_first_layer/full.png',-1440),
-    new BackgroundObject('img/5_background/layers/3_third_layer/full.png',0),
-    new BackgroundObject('img/5_background/layers/2_second_layer/full.png',0),
-    new BackgroundObject('img/5_background/layers/1_first_layer/full.png',0),
-    new BackgroundObject('img/5_background/layers/3_third_layer/full.png',1440 * 1),
-    new BackgroundObject('img/5_background/layers/2_second_layer/full.png',1440 * 1),
-    new BackgroundObject('img/5_background/layers/1_first_layer/full.png',1440 * 1),
-    new BackgroundObject('img/5_background/layers/3_third_layer/full.png',1440 * 2),
-    new BackgroundObject('img/5_background/layers/2_second_layer/full.png',1440 * 2),
-    new BackgroundObject('img/5_background/layers/1_first_layer/full.png',1440 * 2),
-    new BackgroundObject('img/5_background/layers/3_third_layer/full.png',1440 * 3),
-    new BackgroundObject('img/5_background/layers/2_second_layer/full.png',1440 * 3),
-    new BackgroundObject('img/5_background/layers/1_first_layer/full.png',1440 * 3),
-],
-3500
+const level1 = new Level(chicken,clouds,bgp,1440 * (levelLength - 1));
 
-);
+
+function levelDesign() {
+    bgp.push(new BackgroundObject('img/5_background/layers/3_third_layer/full.png', -1440));
+    bgp.push(new BackgroundObject('img/5_background/layers/2_second_layer/full.png', -1440));
+    bgp.push(new BackgroundObject('img/5_background/layers/1_first_layer/full.png', -1440));
+
+    for (let i = 0; i < levelLength; i++) {
+        bgp.push(new BackgroundObject('img/5_background/layers/3_third_layer/full.png', 1440 * i));
+        bgp.push(new BackgroundObject('img/5_background/layers/2_second_layer/full.png', 1440 * i));
+        bgp.push(new BackgroundObject('img/5_background/layers/1_first_layer/full.png', 1440 * i));
+
+    }
+
+    for (let i = 0; i < levelLength; i++) {
+        clouds.push(new Cloud(1440 * i));
+        chicken.push(new Chicken(1440 * (i+1))) 
+    }
+}

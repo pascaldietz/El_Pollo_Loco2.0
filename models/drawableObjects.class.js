@@ -25,8 +25,8 @@ class DrawableObjects {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    /*drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken) {
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Bottle) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
@@ -34,5 +34,5 @@ class DrawableObjects {
             ctx.stroke();
         }
 
-    }*/
+    }
 }
