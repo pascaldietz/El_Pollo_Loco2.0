@@ -50,3 +50,9 @@ window.addEventListener('keyup', (event) => {
         keyboard.D = false;
     }
 });
+
+
+
+function clearAllIntervals(){
+    for (let i = 1; i < 100; i++) window.clearInterval(i);
+  }

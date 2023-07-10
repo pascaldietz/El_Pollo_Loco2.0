@@ -9,6 +9,7 @@ class World {
     statusBarBottle = new StatusBarBottle();
     statusBarCoins = new StatusBarCoins();
     endScreen = new EndScreen();
+    gameOverScreen = new GameOverScreen();
     throwableObjects = []
     endBossIsSpawn = false;
     collectibles = []
@@ -83,6 +84,13 @@ class World {
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoins);
         if (this.character.isDead()) { this.addToMap(this.endScreen); }
+        if(this.endBossIsSpawn){
+            if(world.level.enemies[world.level.enemies.length-1].health <= 0) {
+                this.addToMap(this.gameOverScreen);
+                setTimeout(clearAllIntervals, 1000);
+
+            }
+        }
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -131,7 +139,6 @@ class World {
                 } else {
                     this.character.hit(enemy.attack);
                     this.statusBar.setPercentage(this.character.health)
-                    console.log(this.character.health)
                 }
             }
         });
@@ -142,7 +149,9 @@ class World {
         if (this.endBossIsSpawn && this.throwableObjects.length > 0) {
             this.throwableObjects.forEach((obj) => {
                 if (this.level.enemies[world.level.enemies.length - 1].isColliding(obj)) {
-                    this.level.enemies[world.level.enemies.length - 1].hit(obj.attack)
+                    this.level.enemies[world.level.enemies.length - 1].hit(obj.attack);
+                    this.throwableObjects.splice(0, 1);
+
                 }
             })
         }

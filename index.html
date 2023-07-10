@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-
     <script src="models/drawableObjects.class.js"></script>
     <script src="models/movable-objects.class.js"></script>
     <script src="models/keyboard.class.js"></script>
@@ -23,23 +22,23 @@
     <script src="models/status-bar-bottle.class.js"></script>
     <script src="models/status-bar-coins.class.js"></script>
     <script src="models/endscreen.class.js"></script>
+    <script src="models/gameOverScreen.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="models/world.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
     <script src="js/game.js"></script>
-
-
     <title>El Pollo Loco</title>
 </head>
 
 <body onload="init()">
-    <h1>El Pollo Loco</h1>
-
-    <canvas id="canvas" width="720" height="480"></canvas>
-    <div style="position: relative; z-index: 3; ">
-        <h2>"Pfeiltesten" zum Bewegen</h2>
-        <h2>"Space" zum Springen</h2>
-        <h2>"D" zum Flasche Werfen</h2>
+    <!-- <h1>El Pollo Loco</h1> -->
+    <div class="gameScreen d-none">
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div style="position: relative; bottom: 1.5rem; z-index: 3; display: flex;">
+            <h2>"Pfeiltesten" zum Bewegen</h2>
+            <h2>"Space" zum Springen</h2>
+            <h2>"D" zum Flasche Werfen</h2>
+        </div>
     </div>
 </body>
 
