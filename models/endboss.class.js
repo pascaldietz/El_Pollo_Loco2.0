@@ -2,7 +2,7 @@ class Endboss extends MovebleObject {
     width = 400;
     height = 400;
     y = 80;
-    health = 200;
+    health = 100;
     attack = 1;
     isCollidingCharakter = false;
     attackCounter = 0;

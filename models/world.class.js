@@ -34,7 +34,8 @@ class World {
         }, 30)
 
         setInterval(() => {
-            checkBtnPressed()
+            if(isMobileDevice){checkBtnPressed()}
+            
             this.checkThrowObjects();
         }, 150)
     }
@@ -136,7 +137,7 @@ class World {
         this.level.enemies.forEach((enemy, y) => {
             if (!this.level.enemies[y].isDead() && this.character.isColliding(enemy)) {
                 if (this.character.speedY < 0 && this.character.isAboveGround()) {
-                    this.level.enemies[y].hit(5);
+                    if(enemy instanceof Chicken || enemy instanceof BabyChicken){this.level.enemies[y].hit(5);}
                 } else {
                     this.character.hit(enemy.attack);
                     this.statusBar.setPercentage(this.character.health)

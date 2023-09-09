@@ -2,13 +2,12 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let backgroundMusic = new Audio('./audio/latin-reggaeton-hip-hop-mexican-background-music-caliente-flow-146085.mp3')
-
+let isMobile = isMobileDevice()
 function init() {
     canvas = document.getElementById('canvas');
     /*world = new World(canvas, keyboard);*/
     canvas.classList.add('canvasStart')
     /*levelDesign();*/
-    let isMobile = isMobileDevice()
     if (isMobile) {
         document.getElementById('bottomButtons').innerHTML = `
         <div><img src="./img/arrow_left.png" id="btnLeft"><img src="./img/arrow_right.png" id="btnRight"></div>
@@ -22,8 +21,8 @@ function init() {
         <h2>"Space" zum Springen</h2>
         <h2>"D" zum Flasche Werfen</h2>`
     }
-    
-    
+
+
 }
 function startGame() {
     world = new World(canvas, keyboard);
@@ -36,40 +35,41 @@ function startGame() {
 }
 
 function checkBtnPressed() {
-    document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        console.log('Taste Links ist gedrückt!')
-        keyboard.LEFT = true;
-    });
-    document.getElementById('btnLeft').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.LEFT = false;
-    });
-    document.getElementById('btnRight').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.RIGHT = true;
-    });
-    document.getElementById('btnRight').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.RIGHT = false;
-    });
-    document.getElementById('btnJump').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.SPACE = true;
-    });
-    document.getElementById('btnJump').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.SPACE = false;
-    });
-    document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.D = true;
-    });
-    document.getElementById('btnThrow').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.D = false;
-    });
-
+    if (isMobile) {
+        document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            console.log('Taste Links ist gedrückt!')
+            keyboard.LEFT = true;
+        });
+        document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            keyboard.LEFT = false;
+        });
+        document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            keyboard.RIGHT = true;
+        });
+        document.getElementById('btnRight').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            keyboard.RIGHT = false;
+        });
+        document.getElementById('btnJump').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            keyboard.SPACE = true;
+        });
+        document.getElementById('btnJump').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            keyboard.SPACE = false;
+        });
+        document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            keyboard.D = true;
+        });
+        document.getElementById('btnThrow').addEventListener('touchend', (e) => {
+            e.preventDefault();
+            keyboard.D = false;
+        });
+    }
 }
 
 
@@ -91,6 +91,7 @@ window.addEventListener('keydown', (event) => {
     }
     if (event.keyCode == 68) {
         keyboard.D = true;
+        console.log('D Pressedd')
     }
 });
 
