@@ -88,8 +88,8 @@ class Character extends MovebleObject {
         this.applyGravity();
 
     }
-
     animate() {
+        
         setInterval(() => {
             if (!this.isDead() && !this.isHurt()) {
                 if (!this.isAboveGround()) {
@@ -108,6 +108,7 @@ class Character extends MovebleObject {
         }, 1000 / 10);
 
         setInterval(() => {
+            
 
             if (!this.isDead()) {
                 if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {

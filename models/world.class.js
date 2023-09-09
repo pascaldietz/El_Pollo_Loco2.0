@@ -34,6 +34,7 @@ class World {
         }, 30)
 
         setInterval(() => {
+            checkBtnPressed()
             this.checkThrowObjects();
         }, 150)
     }

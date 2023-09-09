@@ -1,10 +1,7 @@
 body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
     background: black;
-    color: yellow;
+    color: #DCE309;
     margin: 0;
 }
 
@@ -12,10 +9,16 @@ body{
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    flex-direction: column; 
-    width: 100%; 
+    flex-direction: column;
+    width: 100vw; 
     height: 100vh;
+    margin: 0;
 }
+
+#bottomButtons div img{
+    padding: 0 20px;
+}
+
 h1{
 font-size: 3rem;
 }
@@ -26,11 +29,37 @@ margin: 0;
 }
 canvas{
     background: url(img/5_background/layers/air.png);
+    display: block;     
+}
+
+.canvasStart{
+    background: url(img/9_intro_outro_screens/start/startscreen_2.png);
+    background-size: contain; 
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+
+.headerButtons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 720px; 
+    z-index: 3; 
+    display: flex;
+}
+.headerButtonsInGame{
+    position: relative;
+    right: 5px;
+    top: 2.5rem;
+    justify-content: flex-end;
 }
 
 /* Smartphones -----------------------------*/
 @media only screen and (max-width: 720px){
     canvas{
+        width: auto;
+    }
+    .headerButtons{
         width: 100%;
     }
 }
@@ -38,6 +67,6 @@ canvas{
 @media only screen and (max-height: 480px){
     canvas{
         height: 100vh;
-        width: 100%;
+        width: auto;        
     }
 }
