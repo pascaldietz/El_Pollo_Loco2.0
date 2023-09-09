@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let backgroundMusic = new Audio('./audio/latin-reggaeton-hip-hop-mexican-background-music-caliente-flow-146085.mp3')
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -21,8 +22,9 @@ function init() {
         <h2>"Space" zum Springen</h2>
         <h2>"D" zum Flasche Werfen</h2>`
     }
+    
+    
 }
-
 function startGame() {
     world = new World(canvas, keyboard);
     levelDesign();
@@ -30,6 +32,7 @@ function startGame() {
     document.getElementById('headerButtons').innerHTML = '<img src="./img/volume.png" onclick="muteSound()" style="width: 2rem; margin: 0 10px; cursor: pointer;">';
     document.getElementById('headerButtons').classList.add('headerButtonsInGame')
     document.getElementById('playButton').innerHTML = '';
+    backgroundMusic.play()
 }
 
 function checkBtnPressed() {
@@ -120,10 +123,12 @@ function clearAllIntervals() {
 
 function muteSound() {
     document.getElementById('headerButtons').innerHTML = '<img src="./img/mute.png" onclick="unmuteSound()" style="width: 2rem; margin: 0 10px; cursor: pointer;">'
+    backgroundMusic.pause()
 }
 
 function unmuteSound() {
     document.getElementById('headerButtons').innerHTML = '<img src="./img/volume.png" onclick="muteSound()" style="width: 2rem; margin: 0 10px; cursor: pointer;">'
+    backgroundMusic.play()
 }
 
 
