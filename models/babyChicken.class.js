@@ -28,16 +28,16 @@ class BabyChicken extends MovebleObject {
         this.animate()
     }
 
-
-
+    /**
+    * Handles the animation behavior for the chicken character.
+    * Moves the character left continuously and plays walking or dead animation based on character's state.
+    */
     animate() {
         setInterval(() => {
             if (!this.isDead()) {
                 this.moveLeft()
             }
-
         }, 1000 / 30);
-
         setInterval(() => {
             if (!this.isDead()) {
                 this.playAnimation(this.IMAGES_WALKING_CHICKEN);
@@ -45,8 +45,6 @@ class BabyChicken extends MovebleObject {
             else{
                 this.playAnimation(this.IMAGES_DEAD_CHICKEN);
             }
-
         }, 1000 / 7);
-
     }
 }

@@ -90,111 +90,79 @@ class Character extends MovebleObject {
         this.applyGravity();
 
     }
+    /**
+    * Handles the animation and character behavior.
+    * - Controls character walking animation and sound when not dead, not hurt, and not above ground.
+    * - Handles character movement (left, right, and jumping).
+    * - Manages character's hurt and idle animations.
+    * - Handles character's dead animation.
+    */
     animate() {
-        
-        setInterval(() => {
-            if (!this.isDead() && !this.isHurt()) {
-                if (!this.isAboveGround()) {
-                    if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                        this.playAnimation(this.IMAGES_WALKING);
-                        this.idleTimer = 0;
-                    }
-                    
-                    if (this.world.keyboard.LEFT && this.x > 20) {
-                        this.playAnimation(this.IMAGES_WALKING);
-                        this.idleTimer = 0;
-                    }
-                    
-                    if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT){
-                        this.walking_sound.play()
-                    }
-                    else{
-                        this.walking_sound.pause()
-                    }
+        let animationInterval = 1000 / 10;
+        let movementInterval = 1000 / 60;
+        let hurtInterval = 1000 / 5;
+        let deadInterval = 1000 / 6;
+        let walkingAnimation = () => {
+            if (!this.isDead() && !this.isHurt() && !this.isAboveGround()) {
+                if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x ||
+                    this.world.keyboard.LEFT && this.x > 20) {
+                    this.playAnimation(this.IMAGES_WALKING);
+                    this.idleTimer = 0;
                 }
-                else{
-                    this.walking_sound.pause()
-                }
-                
+                this.world.keyboard.RIGHT || this.world.keyboard.LEFT ? this.walking_sound.play() : this.walking_sound.pause();
+            } else {
+                this.walking_sound.pause();
             }
-
-
-        }, 1000 / 10);
-
-        setInterval(() => {
-            
+        };
+        let handleMovement = () => {
             if (!this.isDead()) {
                 if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                     this.moveRight();
                     this.otherDirection = false;
-                    
-                    
                 }
                 if (this.world.keyboard.LEFT && this.x > 20) {
-                    this.moveLeft()
+                    this.moveLeft();
                     this.otherDirection = true;
-                    
-
                 }
                 if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                     this.jump();
-                    this.jump_sound.play()
-
+                    this.jump_sound.play();
                 }
                 this.world.camera_x = -this.x + 250;
             }
-
-        }, 1000 / 60);
-
-        setInterval(() => {
-
+        };
+        let handleHurtAndIdle = () => {
             if (!this.isDead()) {
-                if(this.isHurt(0.5)){
+                if (this.isHurt(0.5)) {
                     this.playAnimation(this.IMAGES_HURT);
                     this.idleTimer = 0;
-                    this.hurt_sound.play()
-
-                }
-
-                else if (this.isAboveGround()) {
+                    this.hurt_sound.play();
+                } else if (this.isAboveGround()) {
                     this.playAnimation(this.IMAGES_JUMP);
                     this.idleTimer = 0;
-                }
-
-                
-
-                else if (this.idleTimer > 0.5) {
-                    if (!this.world.keyboard.RIGHT && this.idleTimer < 300) {
+                } else if (this.idleTimer > 0.5) {
+                    if (!this.world.keyboard.RIGHT && this.idleTimer < 300 ||
+                        !this.world.keyboard.LEFT && this.idleTimer < 300) {
                         this.playAnimation(this.IMAGES_IDLE);
                         this.idleTimer++;
                     }
-
-                    if (!this.world.keyboard.LEFT && this.idleTimer < 300) {
-                        this.playAnimation(this.IMAGES_IDLE);
-                        this.idleTimer++;
-                    }
-
                     if (this.idleTimer >= 300) {
                         this.playAnimation(this.IMAGES_IDLE_LONG);
                     }
                 }
             }
-
-
-
             this.idleTimer++;
-
-        }, 1000 / 5);
-
-        setInterval(() => {
-            if (this.isDead()) {
-                if (this.deadCount < 7) {
-                    let path = this.IMAGES_DEAD[this.deadCount];
-                    this.img = this.imageCache[path];
-                    this.deadCount++;
-                }
+        };
+        let handleDeadAnimation = () => {
+            if (this.isDead() && this.deadCount < 7) {
+                let path = this.IMAGES_DEAD[this.deadCount];
+                this.img = this.imageCache[path];
+                this.deadCount++;
             }
-        }, 1000/6)
-
+        };
+        setInterval(walkingAnimation, animationInterval);
+        setInterval(handleMovement, movementInterval);
+        setInterval(handleHurtAndIdle, hurtInterval);
+        setInterval(handleDeadAnimation, deadInterval);
     }
 }

@@ -63,54 +63,62 @@ class Endboss extends MovebleObject {
     }
 
 
-
+    /**
+     * Handles the animation behavior for the Endboss character.
+     */
     animate() {
-        setInterval(() => {
+        let walkingInterval = 1000 / 6;
+        let deadInterval = 1000 / 6;
+        let attackInterval = 1000 / 11;
+        /**
+        * Handles the walking and hurt animations for the Endboss character.
+        */
+        let handleWalkingAndHurt = () => {
             if (!this.isDead()) {
-                if (this.charcterIsLeft && !this.isHurt(1)) {
+                if (!this.isHurt(1)) {
+                    if (this.charcterIsLeft) {
+                        this.moveLeft();
+                        this.otherDirection = false;
+                    } else {
+                        this.moveRight();
+                        this.otherDirection = true;
+                    }
                     this.playAnimation(this.IMAGES_WALKING_CHICKEN);
-                    this.moveLeft();
-                    this.otherDirection = false;
                     this.attack = 1;
-                }
-                if (!this.charcterIsLeft && !this.isHurt(1)) {
-                    this.playAnimation(this.IMAGES_WALKING_CHICKEN);
-                    this.moveRight();
-                    this.otherDirection = true;
-                    this.attack = 1;
-
-                }
-                if (this.isHurt(1)) {
+                } else {
                     this.playAnimation(this.IMAGES_HURT_CHICKEN);
                     this.attack = 0;
                 }
             }
-        }, 1000 / 6);
-
-        setInterval(() => {
-            if (this.isDead()) {
-                if (this.deadCount < 3) {
-                    let path = this.IMAGES_DEAD_CHICKEN[this.deadCount];
-                    this.img = this.imageCache[path];
-                    this.deadCount++;
-                }
+        };
+        /**
+        * Handles the dead animation for the Endboss character.
+        */
+        let handleDead = () => {
+            if (this.isDead() && this.deadCount < 3) {
+                let path = this.IMAGES_DEAD_CHICKEN[this.deadCount];
+                this.img = this.imageCache[path];
+                this.deadCount++;
                 this.attack = 0;
             }
-        }, 1000 / 6)
-
-
-        setInterval(() => {
+        };
+        /**
+        * Handles the attack animation for the Endboss character.
+        */
+        let handleAttack = () => {
             if (this.isCollidingCharakter && !this.isDead() && !this.isHurt(2)) {
                 if (this.attackCounter < 30) {
                     this.playAnimation(this.IMAGES_ATTACK_CHICKEN);
                     this.attackCounter++;
                     this.attack = 2;
-                }
-                else {
+                } else {
                     this.isCollidingCharakter = false;
                     this.attackCounter = 0;
                 }
             }
-        }, 1000 / 11);
+        };
+        setInterval(handleWalkingAndHurt, walkingInterval);
+        setInterval(handleDead, deadInterval);
+        setInterval(handleAttack, attackInterval);
     }
 }

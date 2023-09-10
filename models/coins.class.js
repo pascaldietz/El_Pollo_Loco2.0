@@ -3,7 +3,6 @@ class Coins extends MovebleObject {
     height = 200;
     y = 310; 
 
-
     constructor(start, end) {
         super()
         this.loadImage('img/8_coin/coin_1.png')

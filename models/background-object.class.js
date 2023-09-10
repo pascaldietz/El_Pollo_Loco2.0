@@ -7,5 +7,4 @@ class BackgroundObject extends MovebleObject{
         super().loadImage(imagePath);
         this.x = x;
     }
-
 }

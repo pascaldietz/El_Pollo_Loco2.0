@@ -6,7 +6,7 @@ class Chicken extends MovebleObject {
     speed = 3;
     health = 5;
     attack = 0.1;
-    
+
 
     IMAGES_WALKING_CHICKEN = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
@@ -28,26 +28,31 @@ class Chicken extends MovebleObject {
         this.loadImages(this.IMAGES_DEAD_CHICKEN)
         this.animate()
     }
-
-
-
+    
+    /**
+    * Handles the animation behavior for the chicken character.
+    * Moves the character left continuously and plays walking or dead animation based on character's state.
+    */
     animate() {
+        /**
+        * Moves the character to the left if it is not dead.
+        */
         setInterval(() => {
             if (!this.isDead()) {
                 this.moveLeft()
             }
-
         }, 1000 / 30);
 
+        /**
+        * Plays either the walking or dead animation based on the character's state.
+        */
         setInterval(() => {
             if (!this.isDead()) {
                 this.playAnimation(this.IMAGES_WALKING_CHICKEN);
             }
-            else{
+            else {
                 this.playAnimation(this.IMAGES_DEAD_CHICKEN);
             }
-
         }, 1000 / 7);
-
     }
 }

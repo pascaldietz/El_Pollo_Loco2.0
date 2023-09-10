@@ -5,7 +5,10 @@ let chicken = [];
 
 const level1 = new Level(chicken,clouds,bgp,1440 * (levelLength - 1));
 
-
+/**
+ * Design the level by initializing background objects, clouds, and chickens.
+ * This function sets up the background layers, clouds, chickens, and other level-specific elements.
+ */
 function levelDesign() {
     bgp.push(new BackgroundObject('img/5_background/layers/3_third_layer/full.png', -1440));
     bgp.push(new BackgroundObject('img/5_background/layers/2_second_layer/full.png', -1440));

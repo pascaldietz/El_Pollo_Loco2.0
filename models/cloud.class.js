@@ -4,16 +4,12 @@ class Cloud extends MovebleObject{
     height = 480;
     constructor(x){
         super().loadImage('img/5_background/layers/4_clouds/full.png');
-
         this.x = x;
-        this.cloudsFlow()
-        
+        this.cloudsFlow()      
     }
-
     cloudsFlow(){
         setInterval(() => {
             this.x -= 0.2;
         }, 1000/this.speed);
     }
-
 }

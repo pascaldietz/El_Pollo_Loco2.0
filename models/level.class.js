@@ -9,6 +9,5 @@ class Level {
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;
         this.level_end_x = level_end_x;
-
     }
 } 

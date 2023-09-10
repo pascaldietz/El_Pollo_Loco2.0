@@ -73,6 +73,20 @@ canvas{
     display: none;
 }
 
+.desktopDescription{
+    position: relative; 
+    z-index: 3; 
+    display: flex;
+}
+.mobileHUD{
+    position: relative; 
+    bottom: 3rem; 
+    z-index: 3; 
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%;
+}
+
 /* Smartphones -----------------------------*/
 @media only screen and (max-width: 720px){
     canvas{

@@ -20,7 +20,11 @@ class ThrowableObject extends MovebleObject {
         this.animate()
         this.checkLook()
     }
-
+    /**
+    * Throws the object with a specified trajectory.
+    * @param {number} x - The x-coordinate of the throw.
+    * @param {number} y - The y-coordinate of the throw.
+    */
     thow(x, y) {
         setTimeout(() => {
             this.x = x;
@@ -38,20 +42,21 @@ class ThrowableObject extends MovebleObject {
                 }, 25)
             }
         }, 60)
-
-
     }
-
+    /**
+     * Animates the spinning of the throwable object.
+     */
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE_SPIN)
         }, 1000 / 30)
-
     }
+    /**
+     * Checks the direction to look based on the character's direction.
+     */
     checkLook() {
         setTimeout(() => {
             this.lookRight = !this.world.character.otherDirection;
         }, 50)
-
     }
 }
