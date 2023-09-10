@@ -1,4 +1,4 @@
-let levelLength = 10;
+let levelLength = 5;
 let bgp = [];
 let clouds = [];
 let chicken = [];

@@ -3,27 +3,14 @@ let world;
 let keyboard = new Keyboard();
 let backgroundMusic = new Audio('./audio/latin-reggaeton-hip-hop-mexican-background-music-caliente-flow-146085.mp3')
 let isMobile = isMobileDevice()
+let mobileButtons = false;
+backgroundMusic.volume = 0.2;
 function init() {
     canvas = document.getElementById('canvas');
-    /*world = new World(canvas, keyboard);*/
     canvas.classList.add('canvasStart')
-    /*levelDesign();*/
-    if (isMobile) {
-        document.getElementById('bottomButtons').innerHTML = `
-        <div><img src="./img/arrow_left.png" id="btnLeft"><img src="./img/arrow_right.png" id="btnRight"></div>
-        <div><img src="./img/arrow_up.png" id="btnJump"><img src="./img/arrow_throw.png" id="btnThrow"></div>`
-
-        document.getElementById('bottomButtons').style = 'position: relative; bottom: 3rem; z-index: 3; display: flex; justify-content: space-between; width: 100%;'
-    }
-    else {
-        document.getElementById('bottomButtons').innerHTML = `
-        <h2>"Pfeiltesten" zum Bewegen</h2>
-        <h2>"Space" zum Springen</h2>
-        <h2>"D" zum Flasche Werfen</h2>`
-    }
-
-
+    isPhoneCheckInterval();
 }
+
 function startGame() {
     world = new World(canvas, keyboard);
     levelDesign();
@@ -32,13 +19,13 @@ function startGame() {
     document.getElementById('headerButtons').classList.add('headerButtonsInGame')
     document.getElementById('playButton').innerHTML = '';
     backgroundMusic.play()
+    backgroundMusic.loop
 }
 
 function checkBtnPressed() {
     if (isMobile) {
         document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
             e.preventDefault();
-            console.log('Taste Links ist gedrückt!')
             keyboard.LEFT = true;
         });
         document.getElementById('btnLeft').addEventListener('touchend', (e) => {
@@ -91,7 +78,6 @@ window.addEventListener('keydown', (event) => {
     }
     if (event.keyCode == 68) {
         keyboard.D = true;
-        console.log('D Pressedd')
     }
 });
 
@@ -140,4 +126,49 @@ function isMobileDevice() {
 
     // Überprüfen, ob der User-Agent einen Mobilgerät-Muster enthält
     return mobilePattern.test(navigator.userAgent);
+}
+
+function inputBottomButtonsMobileOrNot() {
+        isMobile = isMobileDevice()
+        if (isMobile) {
+            if (!mobileButtons) {
+                document.getElementById('bottomButtons').innerHTML = `
+                <div><img src="./img/arrow_left.png" id="btnLeft"><img src="./img/arrow_right.png" id="btnRight"></div>
+                <div><img src="./img/arrow_up.png" id="btnJump"><img src="./img/arrow_throw.png" id="btnThrow"></div>`
+                document.getElementById('bottomButtons').style = 'position: relative; bottom: 3rem; z-index: 3; display: flex; justify-content: space-between; width: 100%;'
+                mobileButtons = true;
+            }
+        }
+        else {
+            if (mobileButtons) {
+                document.getElementById('bottomButtons').innerHTML = `
+                <h2>"Pfeiltesten" zum Bewegen</h2>
+                <h2>"Space" zum Springen</h2>
+                <h2>"D" zum Flasche Werfen</h2>`
+                document.getElementById('bottomButtons').style = 'position: relative; z-index: 3; display: flex;'
+                mobileButtons = false;
+            }
+        }
+}
+
+function isLandscapeMode() {
+    return Math.abs(window.orientation) === 90;
+}
+
+function showNotificationLandscape() {
+
+    if (!isLandscapeMode() && isMobile) {
+        document.getElementById('landscapeNote').classList.remove('d-none')
+    }
+    else{
+        document.getElementById('landscapeNote').classList.add('d-none')
+    }
+
+}
+
+function isPhoneCheckInterval() {
+    setInterval(() => {
+        inputBottomButtonsMobileOrNot();
+        showNotificationLandscape();        
+    }, 1000)
 }

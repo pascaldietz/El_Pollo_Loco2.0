@@ -33,17 +33,23 @@
 <body onload="init()">
     <!-- <h1>El Pollo Loco</h1> -->
     <div class="gameScreen">
+        <div id="landscapeNote" class="landscapeNote d-none">
+            <p>Bitte drehe dein Telefon Waagerecht. <br> Um das Spiel spielen zu können.</p>
+        </div>
         <div id="playButton" style="display: flex; align-items: center; justify-content: center; position: absolute;">
             <img src="./img/play-3-128 (1).png" onclick="startGame()">
         </div>
-        <div id="headerButtons" class="headerButtons headerButtonsInGame">   
-        </div>        
+        <div id="headerButtons" class="headerButtons headerButtonsInGame">
+        </div>
         <canvas id="canvas" width="720" height="480">
         </canvas>
-        <div id="bottomButtons" style="position: relative; z-index: 3; display: flex;">
+        <div id="bottomButtons" style="position: relative; bottom: 1.6rem; z-index: 3; display: flex;">
+            <h2>"Pfeiltesten" zum Bewegen</h2>
+            <h2>"Space" zum Springen</h2>
+            <h2>"D" zum Flasche Werfen</h2>
         </div>
     </div>
-    
+
 </body>
 
 </html>

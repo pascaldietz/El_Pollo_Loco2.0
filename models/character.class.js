@@ -75,6 +75,8 @@ class Character extends MovebleObject {
     ]
 
     walking_sound = new Audio('audio/walkingSand.mp3');
+    jump_sound = new Audio('audio/Jump.mp3')
+    hurt_sound = new Audio('audio/hurt_Pepe.mp3')
     world;
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -97,11 +99,23 @@ class Character extends MovebleObject {
                         this.playAnimation(this.IMAGES_WALKING);
                         this.idleTimer = 0;
                     }
+                    
                     if (this.world.keyboard.LEFT && this.x > 20) {
                         this.playAnimation(this.IMAGES_WALKING);
                         this.idleTimer = 0;
                     }
+                    
+                    if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT){
+                        this.walking_sound.play()
+                    }
+                    else{
+                        this.walking_sound.pause()
+                    }
                 }
+                else{
+                    this.walking_sound.pause()
+                }
+                
             }
 
 
@@ -109,20 +123,23 @@ class Character extends MovebleObject {
 
         setInterval(() => {
             
-
             if (!this.isDead()) {
                 if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                     this.moveRight();
                     this.otherDirection = false;
                     
+                    
                 }
                 if (this.world.keyboard.LEFT && this.x > 20) {
                     this.moveLeft()
                     this.otherDirection = true;
+                    
 
                 }
                 if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                     this.jump();
+                    this.jump_sound.play()
+
                 }
                 this.world.camera_x = -this.x + 250;
             }
@@ -135,6 +152,8 @@ class Character extends MovebleObject {
                 if(this.isHurt(0.5)){
                     this.playAnimation(this.IMAGES_HURT);
                     this.idleTimer = 0;
+                    this.hurt_sound.play()
+
                 }
 
                 else if (this.isAboveGround()) {

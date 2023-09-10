@@ -13,6 +13,11 @@ class World {
     throwableObjects = []
     endBossIsSpawn = false;
     collectibles = []
+    bottleThrown = false
+    chicken_sound = new Audio('audio/chickens.mp3')
+    bottle_break_sound = new Audio('audio/bottle_break.mp3')
+
+
 
 
     constructor(canvas, keyboard) {
@@ -23,6 +28,8 @@ class World {
         this.setWorld();
         this.run();
         this.spawnBottlesAndCoins();
+        this.chicken_sound.volume = 0.3;
+        this.chicken_sound.play()
     }
 
     run() {
@@ -34,8 +41,8 @@ class World {
         }, 30)
 
         setInterval(() => {
-            if(isMobileDevice){checkBtnPressed()}
-            
+            if (isMobileDevice) { checkBtnPressed() }
+
             this.checkThrowObjects();
         }, 150)
     }
@@ -51,14 +58,18 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.character.bottles > 0) {
+        if (this.keyboard.D && this.character.bottles > 0 && !this.bottleThrown) {
+            this.bottleThrown = true
             let bottle = new ThrowableObject(this.character.x + (this.character.width / 2), this.character.y + (this.character.height / 2))
             this.throwableObjects.push(bottle)
             this.character.bottles--;
-            this.statusBarBottle.setPercentage(this.character.bottles / 8 * 100);
+            this.statusBarBottle.setPercentage(this.character.bottles / 15 * 100);
             this.throwableObjects.forEach((obj) => {
                 obj.world = this;
             })
+            setTimeout(() => {
+                this.bottleThrown = false
+            }, 800);
         }
     }
 
@@ -86,8 +97,8 @@ class World {
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoins);
         if (this.character.isDead()) { this.addToMap(this.endScreen); }
-        if(this.endBossIsSpawn){
-            if(world.level.enemies[world.level.enemies.length-1].health <= 0) {
+        if (this.endBossIsSpawn) {
+            if (world.level.enemies[world.level.enemies.length - 1].health <= 0) {
                 this.addToMap(this.gameOverScreen);
                 setTimeout(clearAllIntervals, 1000);
 
@@ -137,7 +148,8 @@ class World {
         this.level.enemies.forEach((enemy, y) => {
             if (!this.level.enemies[y].isDead() && this.character.isColliding(enemy)) {
                 if (this.character.speedY < 0 && this.character.isAboveGround()) {
-                    if(enemy instanceof Chicken || enemy instanceof BabyChicken){this.level.enemies[y].hit(5);}
+                    if (enemy instanceof Chicken || enemy instanceof BabyChicken) { this.level.enemies[y].hit(5); }
+                    enemy.squeak_sound.play()
                 } else {
                     this.character.hit(enemy.attack);
                     this.statusBar.setPercentage(this.character.health)
@@ -153,7 +165,7 @@ class World {
                 if (this.level.enemies[world.level.enemies.length - 1].isColliding(obj)) {
                     this.level.enemies[world.level.enemies.length - 1].hit(obj.attack);
                     this.throwableObjects.splice(0, 1);
-
+                    this.bottle_break_sound.play()
                 }
             })
         }
@@ -176,20 +188,20 @@ class World {
     }
 
     spawnEndBoss() {
-        if (this.character.x > this.level.level_end_x/2 && !this.endBossIsSpawn) {
+        if (this.character.x > this.level.level_end_x / 2 && !this.endBossIsSpawn) {
             this.level.enemies.push(new Endboss(this.level.level_end_x + 400));
             this.endBossIsSpawn = true;
         }
     }
 
-    spawnBottlesAndCoins(){
-        for (let i = 0; i < 8; i++) {
-            this.collectibles.push(new Bottle(i,this.level.level_end_x))
-            
+    spawnBottlesAndCoins() {
+        for (let i = 0; i < 15; i++) {
+            this.collectibles.push(new Bottle(i, this.level.level_end_x))
+
         }
         for (let i = 0; i < 11; i++) {
-            this.collectibles.push(new Coins(i,this.level.level_end_x))
-            
+            this.collectibles.push(new Coins(i, this.level.level_end_x))
+
         }
     }
 }

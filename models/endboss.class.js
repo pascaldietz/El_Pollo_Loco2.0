@@ -66,25 +66,23 @@ class Endboss extends MovebleObject {
 
     animate() {
         setInterval(() => {
-            if (!this.isCollidingCharakter && !this.isDead()) {
-                if (this.isHurt(2)) {
-                    this.playAnimation(this.IMAGES_HURT_CHICKEN);
-                    this.attack = 0;
-                }
-
-
-                else if(this.charcterIsLeft) {
+            if (!this.isDead()) {
+                if (this.charcterIsLeft && !this.isHurt(1)) {
                     this.playAnimation(this.IMAGES_WALKING_CHICKEN);
                     this.moveLeft();
                     this.otherDirection = false;
                     this.attack = 1;
                 }
-                else{
+                if (!this.charcterIsLeft && !this.isHurt(1)) {
                     this.playAnimation(this.IMAGES_WALKING_CHICKEN);
                     this.moveRight();
                     this.otherDirection = true;
                     this.attack = 1;
 
+                }
+                if (this.isHurt(1)) {
+                    this.playAnimation(this.IMAGES_HURT_CHICKEN);
+                    this.attack = 0;
                 }
             }
         }, 1000 / 6);
@@ -98,7 +96,7 @@ class Endboss extends MovebleObject {
                 }
                 this.attack = 0;
             }
-        }, 1000/6)
+        }, 1000 / 6)
 
 
         setInterval(() => {
@@ -113,6 +111,6 @@ class Endboss extends MovebleObject {
                     this.attackCounter = 0;
                 }
             }
-        }, 1000/11);
+        }, 1000 / 11);
     }
 }

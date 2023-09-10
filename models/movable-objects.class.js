@@ -9,12 +9,19 @@ class MovebleObject extends DrawableObjects {
     health = 100;
     attack = 20;
     lastHit = 0;
+    jumped = false
+    landing_sound = new Audio('audio/land_sand_snow.mp3')
+    squeak_sound = new Audio ('audio/squeak.mp3')
 
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+            }
+            if(this.jumped && !this.isAboveGround()){
+                this.landing_sound.play()
+                this.jumped = false;
             }
 
         }, 1000 / 25)
@@ -52,6 +59,7 @@ class MovebleObject extends DrawableObjects {
 
     jump() {
         this.speedY = 25;
+        this.jumped = true
     }
 
     isColliding(mo) {
